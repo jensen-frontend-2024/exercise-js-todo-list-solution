@@ -1,0 +1,17 @@
+.todo-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo {
+  cursor: pointer;
+}
+
+.todo .todo-label,
+.todo .todo-input {
+  cursor: pointer;
+}
+
+.todo .todo-label.done {
+  text-decoration: line-through;
+}
