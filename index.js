@@ -51,6 +51,11 @@ function addNewTodoToTodoList(todoElementString) {
   todoList.insertAdjacentHTML("beforeend", todoElementString);
 }
 
+/**
+ * Click handler for clicking on a todo.
+ * @param {*} event 
+ * @returns 
+ */
 function handleOnClick(event) {
   const target = event.target;
   const classList = target.classList;
@@ -64,10 +69,18 @@ function handleOnClick(event) {
   markTodoAsDone(target);
 }
 
+/**
+ * Removes a todo from the todo list
+ * @param {*} todoToRemove 
+ */
 function removeTodo(todoToRemove) {
   todoList.removeChild(todoToRemove);
 }
 
+/**
+ * Marks a todo as done or not done
+ * @param {*} target 
+ */
 function markTodoAsDone(target) {
   let article;
 
