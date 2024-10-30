@@ -34,6 +34,9 @@ function createTodoElement(newTodo) {
         <article class="todo">
             <input class="todo-input" type="checkbox">
             <label class="todo-label">${newTodo}</label>
+            <span class="material-symbols-outlined delete">
+                delete
+            </span>
         </article>
      `;
 
@@ -50,6 +53,14 @@ function addNewTodoToTodoList(todoElementString) {
 
 function handleOnClick(event) {
   const target = event.target;
+  const classList = target.classList;
+
+  if (classList.contains("delete")) {
+    const todoElement = target.parentElement;
+    removeTodo(todoElement);
+    return;
+  }
+
   let article;
 
   if (target.tagName !== "ARTICLE") {
@@ -70,4 +81,8 @@ function handleOnClick(event) {
   } else {
     label.classList.remove("done");
   }
+}
+
+function removeTodo(todoToRemove) {
+  todoList.removeChild(todoToRemove);
 }
