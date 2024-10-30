@@ -61,6 +61,14 @@ function handleOnClick(event) {
     return;
   }
 
+  markTodoAsDone(target);
+}
+
+function removeTodo(todoToRemove) {
+  todoList.removeChild(todoToRemove);
+}
+
+function markTodoAsDone(target) {
   let article;
 
   if (target.tagName !== "ARTICLE") {
@@ -81,8 +89,4 @@ function handleOnClick(event) {
   } else {
     label.classList.remove("done");
   }
-}
-
-function removeTodo(todoToRemove) {
-  todoList.removeChild(todoToRemove);
 }
