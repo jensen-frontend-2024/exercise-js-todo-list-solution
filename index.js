@@ -47,6 +47,9 @@ function createTodoElement(newTodo) {
             <span class="material-symbols-outlined move-up">
                 arrow_upward
             </span>
+            <span class="material-symbols-outlined edit">
+                edit
+            </span>
         </article>
      `;
 
@@ -83,6 +86,11 @@ function handleOnClick(event) {
 
   if (targetClassList.contains("move-down")) {
     moveTodo("down", targetParent);
+    return;
+  }
+
+  if (targetClassList.contains("edit")) {
+    editTodo(targetParent);
     return;
   }
 
@@ -157,4 +165,23 @@ function moveTodo(direction, todoToMove) {
       todoList.insertBefore(nextElementSibling, todoToMove);
     }
   }
+}
+
+function editTodo(todoToEdit) {
+  const todoEditForm = document.createElement("form");
+  todoEditForm.innerHTML = `<input class="todo-edit-input" type="text">`;
+  const label = todoToEdit.querySelector(".todo-label");
+  let inputValue = "";
+
+  todoEditForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const input = todoEditForm.firstElementChild; // The input field inside the form
+    inputValue = input.value;
+
+    todoToEdit.replaceChild(label, todoEditForm);
+    label.innerText = inputValue;
+  });
+
+  todoToEdit.replaceChild(todoEditForm, label);
 }
