@@ -41,6 +41,12 @@ function createTodoElement(newTodo) {
             <span class="material-symbols-outlined delete">
                 delete
             </span>
+            <span class="material-symbols-outlined move-down">
+                arrow_downward
+            </span>
+            <span class="material-symbols-outlined move-up">
+                arrow_upward
+            </span>
         </article>
      `;
 
@@ -62,11 +68,21 @@ function addNewTodoToTodoList(todoElementString) {
  */
 function handleOnClick(event) {
   const target = event.target;
-  const classList = target.classList;
+  const targetParent = target.parentElement;
+  const targetClassList = target.classList;
 
-  if (classList.contains("delete")) {
-    const todoElement = target.parentElement;
-    removeTodo(todoElement);
+  if (targetClassList.contains("delete")) {
+    removeTodo(targetParent);
+    return;
+  }
+
+  if (targetClassList.contains("move-up")) {
+    moveTodo("up", targetParent);
+    return;
+  }
+
+  if (targetClassList.contains("move-down")) {
+    moveTodo("down", targetParent);
     return;
   }
 
@@ -123,4 +139,22 @@ async function createDummyTodos() {
   }
 
   addNewTodoToTodoList(dummyDataString);
+}
+
+function moveTodo(direction, todoToMove) {
+  if (direction === "up") {
+    const previousElementSibling = todoToMove.previousElementSibling;
+
+    if (previousElementSibling !== null) {
+      todoList.insertBefore(todoToMove, previousElementSibling);
+    }
+  }
+
+  if (direction === "down") {
+    const nextElementSibling = todoToMove.nextElementSibling;
+
+    if (nextElementSibling !== null) {
+      todoList.insertBefore(nextElementSibling, todoToMove);
+    }
+  }
 }
