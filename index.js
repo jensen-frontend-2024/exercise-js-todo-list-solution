@@ -12,6 +12,28 @@ form.addEventListener("submit", handleOnSubmit);
 
 function handleOnSubmit(event) {
   event.preventDefault();
+
   const newTodo = todoInput.value;
-  console.log("New todo:", newTodo);
+  const newTodoElementString = createTodoElement(newTodo);
+  addNewTodoToTodoList(newTodoElementString);
+  todoInput.value = "";
+}
+
+/**
+ * This function takes a string and returns a string representation of the todo element
+ * @param {*} newTodo
+ * @returns
+ */
+function createTodoElement(newTodo) {
+  const newTodoElementString = /*html*/ `
+        <article class="todo">
+            <p>${newTodo}</p>
+        </article>
+     `;
+
+  return newTodoElementString;
+}
+
+function addNewTodoToTodoList(todoElementString) {
+  todoList.insertAdjacentHTML("beforeend", todoElementString);
 }
