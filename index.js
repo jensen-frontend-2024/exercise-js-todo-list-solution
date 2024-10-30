@@ -9,6 +9,10 @@ const todoInput = document.querySelector(".todo-input");
 form.addEventListener("submit", handleOnSubmit);
 todoList.addEventListener("click", handleOnClick);
 
+// ########## Application code ########## //
+
+createDummyTodos();
+
 // ########## Functions ########## //
 
 /**
@@ -53,8 +57,8 @@ function addNewTodoToTodoList(todoElementString) {
 
 /**
  * Click handler for clicking on a todo.
- * @param {*} event 
- * @returns 
+ * @param {*} event
+ * @returns
  */
 function handleOnClick(event) {
   const target = event.target;
@@ -71,7 +75,7 @@ function handleOnClick(event) {
 
 /**
  * Removes a todo from the todo list
- * @param {*} todoToRemove 
+ * @param {*} todoToRemove
  */
 function removeTodo(todoToRemove) {
   todoList.removeChild(todoToRemove);
@@ -79,7 +83,7 @@ function removeTodo(todoToRemove) {
 
 /**
  * Marks a todo as done or not done
- * @param {*} target 
+ * @param {*} target
  */
 function markTodoAsDone(target) {
   let article;
@@ -102,4 +106,21 @@ function markTodoAsDone(target) {
   } else {
     label.classList.remove("done");
   }
+}
+
+async function createDummyTodos() {
+  const results = await fetch("./dummyData.json");
+  const dummyData = await results.json();
+
+  // Google async/await in JS to read more
+
+  let dummyDataString = "";
+
+  for (const data of dummyData) {
+    const todoElementString = createTodoElement(data.todo);
+    dummyDataString += todoElementString;
+    // dummyDataString = dummyDataString + todoElementString // Equal to above
+  }
+
+  addNewTodoToTodoList(dummyDataString);
 }
