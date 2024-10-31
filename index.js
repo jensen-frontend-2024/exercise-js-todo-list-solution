@@ -3,6 +3,7 @@
 const form = document.querySelector(".form");
 const todoList = document.querySelector(".todo-list");
 const todoInput = document.querySelector(".todo-input");
+const authorSelect = document.querySelector(".author-select");
 
 // ########## Event Listeners ########## //
 
@@ -17,14 +18,13 @@ const dummyTodos = [
   { author: "Niklas", timestamp: new Date("2024-12-31"), todo: "Clean room" },
 ];
 
+const dummyAuthors = ["Niklas", "Maria", "Elsa", "Esther", "Edith"];
+
 createDummyTodos(dummyTodos);
+createDummyAuthors(dummyAuthors);
 
 // ########## Functions ########## //
 
-/**
- * The handler to the submit event.
- * @param {*} event
- */
 function handleOnSubmit(event) {
   event.preventDefault();
 
@@ -34,11 +34,31 @@ function handleOnSubmit(event) {
   todoInput.value = "";
 }
 
-/**
- * This function takes a string and returns a string representation of the todo element
- * @param {*} newTodo
- * @returns
- */
+function createDummyAuthors(dummyAuthors) {
+  let dummyAuthorsHTML = "";
+
+  for (const author of dummyAuthors) {
+    const authorOptionHTML = `
+      <option class="author">${author}</option>
+    `;
+
+    dummyAuthorsHTML += authorOptionHTML;
+  }
+
+  authorSelect.insertAdjacentHTML("afterbegin", dummyAuthorsHTML);
+}
+
+function createDummyTodos(dummyTodos) {
+  let dummyDataString = "";
+
+  for (const rawTodo of dummyTodos) {
+    const todoElementString = createTodoElement(rawTodo.todo);
+    dummyDataString += todoElementString;
+  }
+
+  todoList.insertAdjacentHTML("afterbegin", dummyDataString);
+}
+
 function createTodoElement(newTodo) {
   const newTodoElementString = /*html*/ `
     <article class="todo">
@@ -75,19 +95,10 @@ function createTodoElement(newTodo) {
   return newTodoElementString;
 }
 
-/**
- * Will add the provided todoElementString to the DOM, specifically to the todoListElement.
- * @param {*} todoElementString
- */
 function addNewTodoToTodoList(todoElementString) {
   todoList.insertAdjacentHTML("beforeend", todoElementString);
 }
 
-/**
- * Click handler for clicking on a todo.
- * @param {*} event
- * @returns
- */
 function handleOnClick(event) {
   const target = event.target;
   const targetParent = target.parentElement;
@@ -110,18 +121,10 @@ function handleOnClick(event) {
   }
 }
 
-/**
- * Removes a todo from the todo list
- * @param {*} todoToRemove
- */
 function removeTodo(todoToRemove) {
   todoList.removeChild(todoToRemove);
 }
 
-/**
- * Marks a todo as done or not done
- * @param {*} target
- */
 function markTodoAsDone(target) {
   let article;
 
@@ -143,17 +146,6 @@ function markTodoAsDone(target) {
   } else {
     label.classList.remove("done");
   }
-}
-
-async function createDummyTodos(dummyTodos) {
-  let dummyDataString = "";
-
-  for (const rawTodo of dummyTodos) {
-    const todoElementString = createTodoElement(rawTodo.todo);
-    dummyDataString += todoElementString;
-  }
-
-  addNewTodoToTodoList(dummyDataString);
 }
 
 function moveTodo(direction, todoToMove) {
