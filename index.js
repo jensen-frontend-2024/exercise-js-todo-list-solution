@@ -1,6 +1,6 @@
 // ########## Create references ########## //
 
-const form = document.querySelector(".add-todo");
+const form = document.querySelector(".form");
 const todoList = document.querySelector(".todo-list");
 const todoInput = document.querySelector(".todo-input");
 
@@ -11,7 +11,13 @@ todoList.addEventListener("click", handleOnClick);
 
 // ########## Application code ########## //
 
-createDummyTodos();
+const dummyTodos = [
+  { author: "Niklas", timestamp: new Date("2024-12-29"), todo: "Cook food" },
+  { author: "Maria", timestamp: new Date("2024-12-28"), todo: "Buy candy" },
+  { author: "Niklas", timestamp: new Date("2024-12-31"), todo: "Clean room" },
+];
+
+createDummyTodos(dummyTodos);
 
 // ########## Functions ########## //
 
@@ -35,23 +41,36 @@ function handleOnSubmit(event) {
  */
 function createTodoElement(newTodo) {
   const newTodoElementString = /*html*/ `
-        <article class="todo">
-            <input class="todo-input" type="checkbox">
-            <label class="todo-label">${newTodo}</label>
-            <span class="material-symbols-outlined delete">
-                delete
-            </span>
-            <span class="material-symbols-outlined move-down">
-                arrow_downward
-            </span>
-            <span class="material-symbols-outlined move-up">
-                arrow_upward
-            </span>
-            <span class="material-symbols-outlined edit">
-                edit
-            </span>
-        </article>
-     `;
+    <article class="todo">
+      <div class="upper-todo">
+        <div class="content">
+          <input class="checkbox" type="checkbox">
+          <label class="label">${newTodo}</label>
+        </div>
+
+        <div class="icons">
+          <span class="delete icon material-symbols-outlined ">
+              delete
+          </span>
+          <span class=" move-down icon material-symbols-outlined">
+              arrow_downward
+          </span>
+          <span class=" move-up icon material-symbols-outlined">
+              arrow_upward
+          </span>
+          <span class="edit icon material-symbols-outlined">
+              edit
+          </span>
+        </div>
+      </div>
+
+      <div class="lower-todo">
+        <span>Author</span>
+        <span> • </span>
+        <span>Timestamp</span>
+      </div>   
+    </article>
+  `;
 
   return newTodoElementString;
 }
@@ -77,24 +96,18 @@ function handleOnClick(event) {
   if (targetClassList.contains("delete")) {
     removeTodo(targetParent);
     return;
-  }
-
-  if (targetClassList.contains("move-up")) {
+  } else if (targetClassList.contains("move-up")) {
     moveTodo("up", targetParent);
     return;
-  }
-
-  if (targetClassList.contains("move-down")) {
+  } else if (targetClassList.contains("move-down")) {
     moveTodo("down", targetParent);
     return;
-  }
-
-  if (targetClassList.contains("edit")) {
+  } else if (targetClassList.contains("edit")) {
     editTodo(targetParent);
     return;
+  } else {
+    markTodoAsDone(target);
   }
-
-  markTodoAsDone(target);
 }
 
 /**
@@ -132,18 +145,12 @@ function markTodoAsDone(target) {
   }
 }
 
-async function createDummyTodos() {
-  const results = await fetch("./dummyData.json");
-  const dummyData = await results.json();
-
-  // Google async/await in JS to read more
-
+async function createDummyTodos(dummyTodos) {
   let dummyDataString = "";
 
-  for (const data of dummyData) {
-    const todoElementString = createTodoElement(data.todo);
+  for (const rawTodo of dummyTodos) {
+    const todoElementString = createTodoElement(rawTodo.todo);
     dummyDataString += todoElementString;
-    // dummyDataString = dummyDataString + todoElementString // Equal to above
   }
 
   addNewTodoToTodoList(dummyDataString);

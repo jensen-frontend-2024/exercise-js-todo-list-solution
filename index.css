@@ -1,17 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  border: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  --default-border-radius: 0.5rem;
+  --main-color: #18181b;
+  --text-accent-color: #72767d;
+  --white: #fafafa;
+}
+
+body {
+  font-family: "Roboto", serif;
+  margin-top: 2rem;
+}
+
+/* ########## card styles ########## */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  border-radius: var(--default-border-radius);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: auto;
+  padding: 1rem;
+  width: 400px;
+}
+
+/* ########## form styles ########## */
+
+.form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.form .input {
+  border: 1px solid rgb(228, 228, 231);
+  border-radius: var(--default-border-radius);
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+}
+
+.form .btn {
+  background-color: var(--main-color);
+  border-radius: var(--default-border-radius);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+}
+
+/* ########## todo list styles ########## */
 .todo-list {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 
-.todo {
+/* ########## todo styles ########## */
+
+.todo .upper-todo {
+  display: flex;
   cursor: pointer;
 }
 
-.todo .todo-label,
-.todo .todo-input {
+.todo .upper-todo .content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  flex: 1;
+}
+
+.todo .upper-todo .content .checkbox,
+.todo .upper-todo .content .label {
   cursor: pointer;
 }
 
-.todo .todo-label.done {
-  text-decoration: line-through;
+.todo .upper-todo .icons {
+  display: flex;
+  align-items: center;
+}
+
+.todo .upper-todo .icons .icon:hover {
+  opacity: 0.4;
+}
+
+.todo .lower-todo span {
+  color: var(--text-accent-color);
+  font-size: 0.75rem;
 }
