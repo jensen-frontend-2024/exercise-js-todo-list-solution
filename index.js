@@ -13,9 +13,13 @@ todoList.addEventListener("click", handleOnClick);
 // ########## Application code ########## //
 
 const dummyTodos = [
-  { author: "Niklas", timestamp: new Date("2024-12-29"), todo: "Cook food" },
-  { author: "Maria", timestamp: new Date("2024-12-28"), todo: "Buy candy" },
-  { author: "Niklas", timestamp: new Date("2024-12-31"), todo: "Clean room" },
+  { author: "Niklas", timestamp: new Date("2024-12-29"), content: "Cook food" },
+  { author: "Maria", timestamp: new Date("2024-12-28"), content: "Buy candy" },
+  {
+    author: "Niklas",
+    timestamp: new Date("2024-12-31"),
+    content: "Clean room",
+  },
 ];
 
 const dummyAuthors = ["Niklas", "Maria", "Elsa", "Esther", "Edith"];
@@ -46,21 +50,21 @@ function createDummyAuthors(dummyAuthors) {
 function createDummyTodos(dummyTodos) {
   let dummyDataString = "";
 
-  for (const rawTodo of dummyTodos) {
-    const todoElementString = createTodoElement(rawTodo.todo);
+  for (const todo of dummyTodos) {
+    const todoElementString = createTodoElement(todo);
     dummyDataString += todoElementString;
   }
 
   todoList.insertAdjacentHTML("afterbegin", dummyDataString);
 }
 
-function createTodoElement(newTodo) {
-  const newTodoElementString = /*html*/ `
+function createTodoElement(todo) {
+  return /*html*/ `
     <article class="todo">
       <div class="upper-todo">
         <div class="content">
           <input class="checkbox" type="checkbox">
-          <label class="label">${newTodo}</label>
+          <label class="label">${todo.content}</label>
         </div>
 
         <div class="icons">
@@ -80,14 +84,12 @@ function createTodoElement(newTodo) {
       </div>
 
       <div class="lower-todo">
-        <span>Author</span>
+        <span>${todo.author}</span>
         <span> • </span>
-        <span>Timestamp</span>
+        <span>${todo.timestamp.toDateString()}</span>
       </div>   
     </article>
   `;
-
-  return newTodoElementString;
 }
 
 function editTodo(todoToEdit) {
