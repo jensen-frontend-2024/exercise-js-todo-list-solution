@@ -25,13 +25,8 @@ createDummyAuthors(dummyAuthors);
 
 // ########## Functions ########## //
 
-function handleOnSubmit(event) {
-  event.preventDefault();
-
-  const newTodo = todoInput.value;
-  const newTodoElementString = createTodoElement(newTodo);
-  addNewTodoToTodoList(newTodoElementString);
-  todoInput.value = "";
+function addNewTodoToTodoList(todoElementString) {
+  todoList.insertAdjacentHTML("beforeend", todoElementString);
 }
 
 function createDummyAuthors(dummyAuthors) {
@@ -95,8 +90,23 @@ function createTodoElement(newTodo) {
   return newTodoElementString;
 }
 
-function addNewTodoToTodoList(todoElementString) {
-  todoList.insertAdjacentHTML("beforeend", todoElementString);
+function editTodo(todoToEdit) {
+  const todoEditForm = document.createElement("form");
+  todoEditForm.innerHTML = `<input class="todo-edit-input" type="text">`;
+  const label = todoToEdit.querySelector(".todo-label");
+  let inputValue = "";
+
+  todoEditForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const input = todoEditForm.firstElementChild; // The input field inside the form
+    inputValue = input.value;
+
+    todoToEdit.replaceChild(label, todoEditForm);
+    label.innerText = inputValue;
+  });
+
+  todoToEdit.replaceChild(todoEditForm, label);
 }
 
 function handleOnClick(event) {
@@ -121,8 +131,13 @@ function handleOnClick(event) {
   }
 }
 
-function removeTodo(todoToRemove) {
-  todoList.removeChild(todoToRemove);
+function handleOnSubmit(event) {
+  event.preventDefault();
+
+  const newTodo = todoInput.value;
+  const newTodoElementString = createTodoElement(newTodo);
+  addNewTodoToTodoList(newTodoElementString);
+  todoInput.value = "";
 }
 
 function markTodoAsDone(target) {
@@ -166,21 +181,6 @@ function moveTodo(direction, todoToMove) {
   }
 }
 
-function editTodo(todoToEdit) {
-  const todoEditForm = document.createElement("form");
-  todoEditForm.innerHTML = `<input class="todo-edit-input" type="text">`;
-  const label = todoToEdit.querySelector(".todo-label");
-  let inputValue = "";
-
-  todoEditForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const input = todoEditForm.firstElementChild; // The input field inside the form
-    inputValue = input.value;
-
-    todoToEdit.replaceChild(label, todoEditForm);
-    label.innerText = inputValue;
-  });
-
-  todoToEdit.replaceChild(todoEditForm, label);
+function removeTodo(todoToRemove) {
+  todoList.removeChild(todoToRemove);
 }
