@@ -95,3 +95,8 @@ body {
   color: var(--text-accent-color);
   font-size: 0.75rem;
 }
+
+.todo.done .upper-todo .content .label,
+.todo.done .lower-todo span {
+  text-decoration: line-through;
+}

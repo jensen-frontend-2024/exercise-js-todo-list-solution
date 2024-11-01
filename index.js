@@ -63,7 +63,6 @@ function createTodoElement(todo) {
     <article class="todo">
       <div class="upper-todo">
         <div class="content">
-          <input class="checkbox" type="checkbox">
           <label class="label">${todo.content}</label>
         </div>
 
@@ -113,23 +112,23 @@ function editTodo(todoToEdit) {
 
 function handleOnClick(event) {
   const target = event.target;
-  const targetParent = target.parentElement;
   const targetClassList = target.classList;
+  const currentTodo = target.closest(".todo");
 
   if (targetClassList.contains("delete")) {
-    removeTodo(targetParent);
+    removeTodo(currentTodo);
     return;
   } else if (targetClassList.contains("move-up")) {
-    moveTodo("up", targetParent);
+    moveTodo("up", currentTodo);
     return;
   } else if (targetClassList.contains("move-down")) {
-    moveTodo("down", targetParent);
+    moveTodo("down", currentTodo);
     return;
   } else if (targetClassList.contains("edit")) {
-    editTodo(targetParent);
+    editTodo(currentTodo);
     return;
   } else {
-    markTodoAsDone(target);
+    markTodoAsDone(currentTodo);
   }
 }
 
@@ -142,26 +141,13 @@ function handleOnSubmit(event) {
   todoInput.value = "";
 }
 
-function markTodoAsDone(target) {
-  let article;
+function markTodoAsDone(todoToMark) {
+  const isDone = todoToMark.classList.contains("done");
 
-  if (target.tagName !== "ARTICLE") {
-    article = target.parentElement;
+  if (isDone) {
+    todoToMark.classList.remove("done");
   } else {
-    article = target;
-  }
-
-  const checkbox = article.querySelector(".todo-input");
-  const label = article.querySelector(".todo-label");
-
-  if (target.tagName !== "INPUT") {
-    checkbox.checked = !checkbox.checked;
-  }
-
-  if (checkbox.checked) {
-    label.classList.add("done");
-  } else {
-    label.classList.remove("done");
+    todoToMark.classList.add("done");
   }
 }
 
