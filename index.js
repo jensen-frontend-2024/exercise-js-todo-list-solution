@@ -2,7 +2,7 @@
 
 const form = document.querySelector(".form");
 const todoList = document.querySelector(".todo-list");
-const todoInput = document.querySelector(".todo-input");
+const todoInput = document.querySelector(".input");
 const authorSelect = document.querySelector(".author-select");
 
 // ########## Event Listeners ########## //
@@ -28,10 +28,6 @@ createDummyTodos(dummyTodos);
 createDummyAuthors(dummyAuthors);
 
 // ########## Functions ########## //
-
-function addNewTodoToTodoList(todoElementString) {
-  todoList.insertAdjacentHTML("beforeend", todoElementString);
-}
 
 function createDummyAuthors(dummyAuthors) {
   let dummyAuthorsHTML = "";
@@ -62,9 +58,7 @@ function createTodoElement(todo) {
   return /*html*/ `
     <article class="todo">
       <div class="upper-todo">
-        <div class="content">
-          <label class="label">${todo.content}</label>
-        </div>
+        <p class="content">${todo.content}</p>
 
         <div class="icons">
           <span class="delete icon material-symbols-outlined ">
@@ -135,9 +129,14 @@ function handleOnClick(event) {
 function handleOnSubmit(event) {
   event.preventDefault();
 
-  const newTodo = todoInput.value;
-  const newTodoElementString = createTodoElement(newTodo);
-  addNewTodoToTodoList(newTodoElementString);
+  const newTodo = {
+    content: todoInput.value,
+    author: authorSelect.value,
+    timestamp: new Date(),
+  };
+
+  const newTodoHTML = createTodoElement(newTodo);
+  todoList.insertAdjacentHTML("afterbegin", newTodoHTML);
   todoInput.value = "";
 }
 

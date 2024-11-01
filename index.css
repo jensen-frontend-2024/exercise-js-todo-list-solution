@@ -77,11 +77,6 @@ body {
   flex: 1;
 }
 
-.todo .upper-todo .content .checkbox,
-.todo .upper-todo .content .label {
-  cursor: pointer;
-}
-
 .todo .upper-todo .icons {
   display: flex;
   align-items: center;
@@ -96,7 +91,7 @@ body {
   font-size: 0.75rem;
 }
 
-.todo.done .upper-todo .content .label,
+.todo.done .upper-todo .content,
 .todo.done .lower-todo span {
   text-decoration: line-through;
 }
